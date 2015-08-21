@@ -94,5 +94,36 @@ $DB = new PDO($server, $username, $password);
             $this->assertEquals([], $result);
         }
 
+        function testFind()
+        {
+            //Arrange
+            $id = null;
+            $name = "Mariann";
+            $test_stylist = new Stylist($id, $name);
+            $test_stylist->save();
+            $name2 = "Mario";
+            $test_stylist2 = new Stylist($id, $name2);
+            $test_stylist2->save();
+            //Act
+            $result = Stylist::find($test_stylist->getId());
+            //Assert
+            $this->assertEquals($test_stylist, $result);
+        }
+
+        function testUpdate()
+        {
+            //Arrange
+            $id = null;
+            $name = "Mariann";
+            $test_stylist = new Stylist($id, $name);
+            $test_stylist->save();
+            $new_name = "Ashley";
+            //Act
+            $test_stylist->update($new_name);
+            //Assert
+            $result = $test_stylist->getName();
+            $this->assertEquals($new_name, $result);
+        }
+
     }
 ?>
