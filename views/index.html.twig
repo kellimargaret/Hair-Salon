@@ -6,8 +6,36 @@
 </head>
 <body>
     <div class='container'>
-        <h1>Index</h1>
-        <p></p>
+            <h1>Salon Ice</h1>
+            <p>The best hairstylists west of the Mississippi!</p>
+
+        <div class="form-group">
+            <form action="/stylists" method="post">
+                <label for="stylists">Cuisines: </label>
+                <input type="text" name="stylists" placeholder="Enter Stylist Name" id="stylists">
+
+                <button name="submit" class="btn-info">Add Stylist</button>
+        </div>
+
+        {% if stylists is not empty %}
+            <p>Here are all your Stylists as Salon Ice:</p>
+            <ul>
+                {% for stylist in stylists %}
+                <form action="/stylists" method="post">
+        <input id="stylist_id" type="hidden" name="stylist_id" value="{{ stylists.getId() }}">
+
+                </form>
+
+                <li><a href="/stylists/{{ stylist.getId }}">{{ stylists.getName }}</a></li>
+                {% endfor %}
+            </ul>
+            {% else %}
+                <p>There are no stylists yet!</p>
+            {% endif %}
+
+            <form action='/stylists' method='post'>
+                <button type='submit'class="btn-info">BLAH</button>
     </div>
+
 </body>
 </html>
