@@ -1,106 +1,120 @@
 <?php
 
-    class Client
+class Client
     {
-    private $name;
-    private $stylist_id;
-    private $id;
-    private $phone;
-    private $next_visit;
+        private $id;
+        private $name;
+        private $phone;
+        private $next_visit;
+        private $stylist_id;
 
-    //Constructors
-    function __construct($name, $stylist_id, $phone, $next_visit, $id = null)
-    {
-        $this->client_name = $name;
-        $this->stylist_id = $stylist_id;
-        $this->phone = $phone
-        $this->next_visit = $next_visit;
-        $this->id = $id;
-    }
-    //Setters
-    function setClientName($new_client)
-    {
-        $this->name = (string) $new_client;
-    }
 
-    function setStylistId($new_stylist_id)
-    {
-        $this->stylist_id = (string) $new_stylist_id;
-    }
-
-    function setPhone($new_phone)
-    {
-        $this->phone = (string) $new_phone;
-    }
-
-    function getNextVisit($new_visit)
-    {
-        $this->next_visit = $new_visit;
-    }
-
-    //Getters
-    function getClientName()
-    {
-        return $this->name;
-    }
-
-    function getId()
-    {
-      return $this->id;
-    }
-
-    function getStylistId()
-    {
-        return $this->stylist_id;
-    }
-
-    function getPhone()
-    {
-        return $this->phone;
-    }
-
-    function getNextVisit()
-    {
-        return $this->next_visit;
-    }
-
-    //Save function
-    function save()
-    {
-      $GLOBALS['DB']->exec("INSERT INTO client (name, stylist_id, phone, next_visit) VALUES ('{$this->getClientName()}', {$this->getStylistId()}, '{$this->getPhone()}', '{$this->getNextVisit()}');");
-      $this->id = $GLOBALS['DB']->lastInsertId();
-    }
-    //Get All function
-    static function getAll()
-    {
-        $returned_tasks = $GLOBALS['DB']->query("SELECT * FROM client ORDER BY next_visit;");
-        $tasks = array();
-        foreach($returned_client as $client) {
-          $name = $name['name'];
-          $id = $client['id'];
-          $stylist_id = $client['stylist_id'];
-          $new_client = new Client($name, $stylist_id, $phone, $next_visit, $id);
-          array_push($clients, $new_client);
+        //Constructor
+        function __construct($id = null, $name, $phone, $next_visit, $stylist_id)
+        {
+            $this->id = $id;
+            $this->name = $name;
+            $this->phone = $phone;
+            $this->next_visit = $next_visit;
+            $this->stylist_id = $stylist_id;
         }
-        return $clients;
-    }
-    //Delete ALl function
-    static function deleteAll()
-    {
-      $GLOBALS ['DB']->exec("DELETE FROM clients;");
-    }
-    //Find function
-    static function find($search_id)
-    {
-      $found_client = null;
-      $clients = Client::getAll();
-      foreach($clients as $client) {
-        $client_id = $client->getId();
-        if ($client_id == $search_id) {
-          $found_client = $client;
+
+        //Getters
+        function getId()
+        {
+            return $this->id;
         }
-      }
-      return $found_client;
+
+        function getName()
+        {
+            return $this->name;
+        }
+
+        function getPhone()
+        {
+            return $this->phone;
+        }
+
+        function getNextVisit()
+        {
+            return $this->next_visit;
+        }
+
+        function getStylistId()
+        {
+            return $this->stylist_id;
+        }
+
+        //Setters
+        function setName($new_name)
+        {
+            $this->name = $new_name;
+        }
+
+        function setPhone($new_phone)
+        {
+            $this->phone = $new_phone;
+        }
+
+        function setNextVisit($new_next_visit)
+        {
+            $this->next_visit = $new_next_visit;
+        }
+
+        function setStylistId($new_stylist_id)
+        {
+            $this->stylist_id = $new_stylist_id;
+        }
+
+        function save()
+        {
+            $GLOBALS['DB']->exec("INSERT INTO client (name, phone, next_visit, stylist_id) VALUES ('{$this->getName()}', '{$this->getPhone()}', '{$this->getNextVisit()}', {$this->getStylistId()});");
+            $this->id = $GLOBALS['DB']->lastInsertId();
+        }
+
+        static function getAll()
+        {
+            $returned_clients = $GLOBALS['DB']->query("SELECT * FROM client");
+            $clients = array();
+            foreach($returned_clients as $client) {
+                $id = $client['id'];
+                $name = $client['name'];
+                $phone = $client['phone'];
+                $next_visit = $client['next_visit'];
+                $stylist_id = $client['stylist_id'];
+                $new_client = new Client($id, $name, $phone, $next_visit, $stylist_id);
+                array_push($clients, $new_client);
+            }
+            return $clients;
+        }
+
+        static function deleteAll()
+        {
+            $GLOBALS['DB']->exec("DELETE FROM client;");
+        }
+
+        static function find($search_id)
+        {
+            $found_client = null;
+            $clients = Client::getAll();
+            foreach($clients as $client) {
+                $client_id = $client->getId();
+                if ($client_id == $search_id) {
+                    $found_client = $client;
+                }
+            }
+            return $found_client;
+        }
+
+        function update($field, $new_value)
+        {
+            $GLOBALS['DB']->exec("UPDATE client SET {$field} = '{$new_value}' WHERE id = {$this->getId()};");
+        }
+
+        function delete()
+        {
+            $GLOBALS['DB']->exec("DELETE FROM client WHERE id = {$this->getId()};");
+        }
     }
 
 ?>
