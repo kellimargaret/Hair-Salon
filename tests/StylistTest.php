@@ -125,5 +125,46 @@ $DB = new PDO($server, $username, $password);
             $this->assertEquals($new_name, $result);
         }
 
+        function testDelete()
+        {
+            //Arrange
+            $id = null;
+            $name = "Mariann";
+            $test_stylist = new Stylist($id, $name);
+            $test_stylist->save();
+            $name2 = "Mario";
+            $test_stylist2 = new Stylist($id, $name2);
+            $test_stylist2->save();
+            //Act
+            $test_stylist->delete();
+            //Assert
+            $result = Stylist::getAll();
+            $this->assertEquals([$test_stylist2], $result);
+        }
+
+        function testGetClients()
+        {
+            //Arrange
+            $id = null;
+            $name = "Mariann";
+            $test_stylist = new Stylist($id, $name);
+            $test_stylist->save();
+            $test_stylist_id = $test_stylist->getId();
+            $client_name = "Mario";
+            $phone = "(570) 428-2910";
+            $next_visit = "2015-08-10";
+            $test_client = new Client($id, $client_name, $phone, $next_visit, $test_stylist_id);
+            $test_client->save();
+            $client_name2 = "Maria";
+            $phone2 = "(574) 444-2910";
+            $next_visit2 = "2015-08-15";
+            $test_client2 = new Client($id, $client_name2, $phone2, $next_visit2, $test_stylist_id);
+            $test_client2->save();
+            //Act
+            $result = $test_stylist->getClients();
+            //Assert
+            $this->assertEquals([$test_client, $test_client2], $result);
+        }
+
     }
 ?>
