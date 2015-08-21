@@ -5,6 +5,12 @@
 
 ##Description
 
+** [Note to instructor] **
+I've been having huge problems with getting my localhost server to run with MySQL.
+I haven't been able to test my twig files as a result. I hope to complete the front-end
+of this application at Epicodus on the computers there - however it's very important to me
+to figure out how to resolve this before the next review! 
+
 App for Salon owner to review and add new stylist and their individual list of clients.
 
 ##Setup
