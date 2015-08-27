@@ -42,7 +42,12 @@
                 <p>{{ stylist.getStylistName }} currently has no clients!</p>
             {% endif %}
         </div>
-        <p>Go back <a href='/'>home</a>.</p>
+        <form action='/delete_clients' method='post'>
+            <div class='form-group'>
+                <button type='submit' class='btn btn-info'>Clear clients</button>
+            </div>
+        </form>
+        <p>Go back <a href='/'>Home</a></p>
     </div>
 </body>
 </html>
