@@ -47,20 +47,20 @@
         //Go to a specific stylist
         $app->get('/stylists/{id}', function($id) use ($app) {
             $stylist = Stylist::find($id);
-            return $app['twig']->render('stylist.html.twig', array('stylist' => $stylist, 'clients' => $stylist->getClients()));
+            return $app['twig']->render('stylists.html.twig', array('stylist' => $stylist, 'clients' => $stylist->getClients()));
         });
 
         //Add a client to stylist list
-        $app->post('clients', function() use($app) {
-            $name = $_POST['name'];
+        $app->post('/clients', function() use($app) {
+            $client_name = $_POST['client_name'];
             $phone = $_POST['phone'];
-            $next_visit = $_POST['last_visit'];
+            $next_visit = $_POST['next_visit'];
             $stylist_id = $_POST['stylist_id'];
-            $client = new Client($id = null, $name, $phone, $next_visit, $stylist_id);
+            $client = new Client($id = null, $client_name, $phone, $next_visit, $stylist_id);
             $client->save();
             $stylist = Stylist::find($stylist_id);
             $clients = $stylist->getClients();
-            return $app['twig']->render('stylist.html.twig', array('stylist' => $stylist, 'clients' => $clients));
+            return $app['twig']->render('stylists.html.twig', array('stylist' => $stylist, 'clients' => $clients));
         });
 
 

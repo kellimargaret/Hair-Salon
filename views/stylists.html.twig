@@ -1,48 +1,48 @@
 <html>
-    <head>
-        <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css'>
-        <title>Salon Ice</title>
-    </head>
-    <body>
-        <div class='container focus'>
-           <h1>H&auml;ir Met&auml;ling</h1>
-           <p>Because {{ stylist.getName }}'s clients' hair continues to grow after the 80s have died.</p>
-           <p><a href='/stylists/{{ stylist.getId }}/edit'>Edit/delete</a> {{stylist.getName }}.</p>
-           <div class='withinfocus'>
-               <p>Enter a new client:</p>
-               <form action='/clients' method='post'>
-                   <input id='stylist_id' name='stylist_id' type='hidden' value='{{ stylist.getId }}'>
-                   <div class='form-group'>
-                       <input id='name' name='name' type='text' placeholder='Name' class='form-control'>
-                   </div>
-                   <div class='form-group'>
-                       <input id='phone' name='phone' type='text' placeholder='Phone number' class='form-control'>
-                   </div>
-                   <div class='form-group'>
-                       <label for='last_visit'>Last visit:</label>
-                       <input id='last_visit' name='last_visit' type='date' class='form-control'>
-                   </div>
-                   <button type='submit' class='right btn btn-default'>Add client</button>
-               </form>
-               <div class='bottom'></div>
+<head>
+    <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css'>
+    <title>Salon Ice</title>
+</head>
+<body>
+    <div class='container'>
+        <h1>Salon Ice</h1>
 
-               {% if clients is not empty %}
-                   <ul>
-                       {% for client in clients %}
-                           <div class='stylist'>
-                               <li><h4> {{ client.getName }} </h4></li>
-                               <li> {{ client.getPhone }} </li>
-                               <li> {{ client.getLastVisit }} </li>
-                               <li><a href='/clients/{{ client.getId }}/edit'>Edit this client</a></li>
-                           </div>
-                       {% endfor %}
+        <p>{{ stylist.getStylistName }}'s client list.</p>
+        <p><a href='/stylists/{{ stylist.getId }}/edit'>Edit/delete</a>{{stylist.getStylistName }}.</p>
+        <div class='form-group'>
+            <p>Enter a new client:</p>
+            <form action='/clients' method='post'>
+                <input id='stylist_id' name='stylist_id' type='hidden' value='{{ stylist.getId }}'>
+                <div class='form-group'>
+                    <input id='client_name' name='client_name' type='text' placeholder='Client Name' class='form-control'>
+                </div>
+                <div class='form-group'>
+                    <input id='phone' name='phone' type='text' placeholder='Phone number' class='form-control'>
+                </div>
+                <div class='form-group'>
+                    <label for='next_visit'>Next visit:</label>
+                    <input id='next_visit' name='next_visit' type='date' class='form-control'>
+                </div>
+                <button type='submit' class='btn btn-info'>Add client</button>
+            </form>
+            <div class='form-group'></div>
 
-                   </ul>
-               {% else %}
-                   <p>{{ stylist.getName }} currently has no clients!</p>
-               {% endif %}
-           </div>
-           <p>Go back <a href='/'>home</a>.</p>
-       </div>
-    </body>
+            {% if clients is not empty %}
+                <ul>
+                    {% for client in clients %}
+                        <div class='form-group'>
+                            <li><h4> {{ client.getClientName }} </h4></li>
+                            <li> {{ client.getPhone }} </li>
+                            <li> {{ client.getNextVisit }} </li>
+                            <li><a href='/clients/{{ client.getId }}/edit'>Edit client</a></li>
+                        </div>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>{{ stylist.getStylistName }} currently has no clients!</p>
+            {% endif %}
+        </div>
+        <p>Go back <a href='/'>home</a>.</p>
+    </div>
+</body>
 </html>
