@@ -6,7 +6,7 @@
 
     //Start of Silex App
     $app = new Silex\Application();
-    $server = 'mysql:host=localhost:8888;dbname=hair_salon';
+    $server = 'mysql:host=localhost:8889;dbname=hair_salon_test';
     $username = 'root';
     $password = 'root';
     $DB = new PDO($server, $username, $password);
@@ -16,6 +16,9 @@
         'twig.path' => __DIR__.'/../views'
     ));
 
+    use Symfony\Component\HttpFoundation\Request;
+    Request::enableHttpMethodParameterOverride();
+
         //Homepage
         $app->get('/', function() use($app) {
             return $app['twig']->render('index.html.twig', array('stylists' => Stylist::getAll()));
@@ -23,7 +26,8 @@
 
         $app->post('/stylists', function() use($app) {
             $id = null;
-            $stylist = new Stylist($id, $_POST['name']);
+            $stylist_name = $_POST['stylist_name'];
+            $stylist = new Stylist($id, $stylist_name);
             $stylist->save();
             return $app['twig']->render('index.html.twig', array('stylists' => Stylist::getAll()));
         });

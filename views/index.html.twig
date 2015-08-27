@@ -11,8 +11,8 @@
 
         <div class="form-group">
             <form action="/stylists" method="post">
-                <label for="stylists">Cuisines: </label>
-                <input type="text" name="stylists" placeholder="Enter Stylist Name" id="stylists">
+                <label for="stylist_name">Stylist: </label>
+                <input type="text" name="stylist_name" placeholder="Enter Stylist Name" id="stylist_name">
 
                 <button name="submit" class="btn-info">Add Stylist</button>
         </div>
@@ -22,19 +22,17 @@
             <ul>
                 {% for stylist in stylists %}
                 <form action="/stylists" method="post">
-        <input id="stylist_id" type="hidden" name="stylist_id" value="{{ stylists.getId() }}">
-
+        <input id="id" type="hidden" name="id" value="{{ stylists.getId() }}">
                 </form>
-
-                <li><a href="/stylists/{{ stylist.getId }}">{{ stylists.getName }}</a></li>
+                <li><a href="/stylists/{{ stylist.getId }}">{{ stylist.getStylistName }}</a></li>
                 {% endfor %}
             </ul>
             {% else %}
                 <p>There are no stylists listed yet!</p>
             {% endif %}
+            <button type='submit'class="btn-info">BLAH</button>
 
-            <form action='/stylists' method='post'>
-                <button type='submit'class="btn-info">BLAH</button>
+
     </div>
 
 </body>

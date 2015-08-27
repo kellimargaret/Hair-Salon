@@ -28,7 +28,7 @@ $DB = new PDO($server, $username, $password);
             $test_stylist = new Stylist($id, $name);
             $test_stylist->save();
             //Act
-            $result = $test_stylist->getName();
+            $result = $test_stylist->getStylistName();
             //Assert
             $this->assertEquals($name, $result);
         }
@@ -42,9 +42,9 @@ $DB = new PDO($server, $username, $password);
             $test_stylist->save();
             //Act
             $new_name = "Ashley";
-            $test_stylist->setName($new_name);
+            $test_stylist->setStylistName($new_name);
             //Assert
-            $result = $test_stylist->getName();
+            $result = $test_stylist->getStylistName();
             $this->assertEquals($new_name, $result);
         }
 
@@ -68,6 +68,7 @@ $DB = new PDO($server, $username, $password);
             $name = "Kourtney";
             $test_stylist = new Stylist($id, $name);
             $test_stylist->save();
+
             $name2 = "Xavier";
             $test_stylist2 = new Stylist($id, $name2);
             $test_stylist2->save();
@@ -81,14 +82,17 @@ $DB = new PDO($server, $username, $password);
         {
             //Arrange
             $id = null;
-            $name = "Mariann";
+            $name = "Kourtney";
             $test_stylist = new Stylist($id, $name);
             $test_stylist->save();
-            $name2 = "Mario";
+
+            $name2 = "Xavier";
             $test_stylist2 = new Stylist($id, $name2);
             $test_stylist2->save();
+
             //Act
             Stylist::deleteAll();
+
             //Assert
             $result = Stylist::getAll();
             $this->assertEquals([], $result);
@@ -98,14 +102,17 @@ $DB = new PDO($server, $username, $password);
         {
             //Arrange
             $id = null;
-            $name = "Mariann";
+            $name = "Kourtney";
             $test_stylist = new Stylist($id, $name);
             $test_stylist->save();
-            $name2 = "Mario";
+
+            $name2 = "Xavier";
             $test_stylist2 = new Stylist($id, $name2);
             $test_stylist2->save();
+
             //Act
             $result = Stylist::find($test_stylist->getId());
+
             //Assert
             $this->assertEquals($test_stylist, $result);
         }
@@ -114,14 +121,19 @@ $DB = new PDO($server, $username, $password);
         {
             //Arrange
             $id = null;
-            $name = "Mariann";
+            $name = "Kourtney";
             $test_stylist = new Stylist($id, $name);
             $test_stylist->save();
-            $new_name = "Ashley";
+
+            $name2 = "Xavier";
+            $test_stylist2 = new Stylist($id, $name2);
+            $test_stylist2->save();
+
             //Act
             $test_stylist->update($new_name);
+
             //Assert
-            $result = $test_stylist->getName();
+            $result = $test_stylist->getStylistName();
             $this->assertEquals($new_name, $result);
         }
 
@@ -129,14 +141,17 @@ $DB = new PDO($server, $username, $password);
         {
             //Arrange
             $id = null;
-            $name = "Mariann";
+            $name = "Kourtney";
             $test_stylist = new Stylist($id, $name);
             $test_stylist->save();
-            $name2 = "Mario";
+
+            $name2 = "Xavier";
             $test_stylist2 = new Stylist($id, $name2);
             $test_stylist2->save();
+
             //Act
             $test_stylist->delete();
+
             //Assert
             $result = Stylist::getAll();
             $this->assertEquals([$test_stylist2], $result);
@@ -144,27 +159,32 @@ $DB = new PDO($server, $username, $password);
 
         function testGetClients()
         {
-            //Arrange
-            $id = null;
-            $name = "Mariann";
-            $test_stylist = new Stylist($id, $name);
-            $test_stylist->save();
-            $test_stylist_id = $test_stylist->getId();
-            $client_name = "Mario";
-            $phone = "(570) 428-2910";
-            $next_visit = "2015-08-10";
-            $test_client = new Client($id, $client_name, $phone, $next_visit, $test_stylist_id);
-            $test_client->save();
-            $client_name2 = "Maria";
-            $phone2 = "(574) 444-2910";
-            $next_visit2 = "2015-08-15";
-            $test_client2 = new Client($id, $client_name2, $phone2, $next_visit2, $test_stylist_id);
-            $test_client2->save();
-            //Act
-            $result = $test_stylist->getClients();
-            //Assert
-            $this->assertEquals([$test_client, $test_client2], $result);
-        }
+           //Arrange
+           $id = null;
+           $name = "Nova";
+           $test_stylist = new Stylist($id, $name);
+           $test_stylist->save();
+
+           $test_stylist_id = $test_stylist->getId();
+
+           $client_name = "Martha Stewart";
+           $phone = "(888) 888-8888";
+           $next_visit = "2015-09-06";
+           $test_client = new Client($id, $client_name, $phone, $next_visit, $test_stylist_id);
+           $test_client->save();
+
+           $name2 = "Jennifer Lopez";
+           $phone2 = "(609) 999-9999";
+           $next_visit2 = "2015-10-12";
+           $test_client2 = new Client($id, $client_name2, $phone2, $next_visit2, $test_stylist_id);
+           $test_client2->save();
+
+           //Act
+           $result = $test_stylist->getClients();
+
+           //Assert
+           $this->assertEquals([$test_client, $test_client2], $result);
+       }
 
     }
 ?>

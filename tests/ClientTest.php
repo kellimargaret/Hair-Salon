@@ -24,13 +24,15 @@
         {
             //Arrange
             $id = null;
-            $name = "Martha Stewart";
+            $client_name = "Martha Stewart";
             $phone = "(888) 888-8888";
             $next_visit = "2015-09-06";
-            $stylist_id = 1;
-            $test_client = new Client($id, $name, $phone, $next_visit, $stylist_id);
+            $stylist_id = "1";
+            $test_client = new Client($id, $client_name, $phone, $next_visit, $stylist_id);
+
             //Act
             $test_client->save();
+
             //Assert
             $result = Client::getAll();
             $this->assertEquals([$test_client], $result);
@@ -44,14 +46,14 @@
             $name = "Martha Stewart";
             $phone = "(888) 888-8888";
             $next_visit = "2015-09-06";
-            $stylist_id = 1;
+            $stylist_id = "1";
             $test_client = new Client($id, $name, $phone, $next_visit, $stylist_id);
             $test_client->save();
 
             $name2 = "Jennifer Lopez";
             $phone2 = "(609) 999-9999";
             $next_visit2 = "2015-10-12";
-            $stylist_id2 = 2;
+            $stylist_id2 = "2";
             $test_client2 = new Client($id, $name2, $phone2, $next_visit2, $stylist_id2);
             $test_client2->save();
             //Act
@@ -68,7 +70,7 @@
             $name = "Martha Stewart";
             $phone = "(888) 888-8888";
             $next_visit = "2015-09-06";
-            $stylist_id = 1;
+            $stylist_id = "1";
             $test_client = new Client($id, $name, $phone, $next_visit, $stylist_id);
             $test_client->save();
 
@@ -121,18 +123,19 @@
             $test_client = new Client($id, $name, $phone, $next_visit, $stylist_id);
             $test_client->save();
 
-
             $new_name = "Katie Curic";
-            $name = 'name';
+            $name = 'client_name';
+
             //Act
             $test_client->update($name, $new_name);
+
             //Assert
             $clients = Client::getAll();
-            $result = $clients[0]->getName();
+            $result = $clients[0]->getClientName();
             $this->assertEquals($new_name, $result);
         }
 
-        //Test function to delete client
+        //Test to delete client function
         function testDelete()
         {
             //Arrange
@@ -144,15 +147,16 @@
             $test_client = new Client($id, $name, $phone, $next_visit, $stylist_id);
             $test_client->save();
 
-
             $name2 = "Jennifer Lopez";
             $phone2 = "(609) 999-9999";
             $next_visit2 = "2015-10-12";
             $stylist_id2 = 2;
             $test_client2 = new Client($id, $name2, $phone2, $next_visit2, $stylist_id2);
             $test_client2->save();
+
             //Act
             $test_client->delete();
+
             //Assert
             $result = Client::getAll();
             $this->assertEquals([$test_client2], $result);
